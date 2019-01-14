@@ -89,5 +89,10 @@ oc create -f https://raw.githubusercontent.com/jaegertracing/jaeger-operator/mas
 
     $ oc -n openshift-operator-lifecycle-manager logs olm-operator-75b75f6657-9zlsq -f
     ```
+8. If you find a `Requirements not met` message, make sure to check the csv
+```
+$ oc get csvs
+$ oc describe csv <CSV NAME>
+```
 
 8. Apply the csv you created earlier and repeat steps 2 through 5.
