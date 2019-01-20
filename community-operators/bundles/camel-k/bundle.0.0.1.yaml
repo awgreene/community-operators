@@ -1,3 +1,8 @@
+---
+# Source: operator-artifacts/templates/camel-k.yaml
+
+
+
 data:
   customResourceDefinitions: |-
     - apiVersion: apiextensions.k8s.io/v1beta1
@@ -85,11 +90,55 @@ data:
         name: camel-k-operator.v0.1.0
         namespace: palceholder
         annotations:
-          categories: "apache, kamel, kubernetes, serverless, microservices"
+          categories: "apache, camel-k, kubernetes, serverless, microservices, integration, code"
           certified: false 
           containerImage: docker.io/apache/camel-k
-          createdAt: 2019-01-10T12:00:00Z
+          createdAt: 2019-01-20T12:00:00Z
           support: Apache Camel Community
+          alm-examples: |-
+            - apiVersion: camel.apache.org/v1alpha1
+              kind: Integration
+              metadata:
+                name: example
+              spec:
+                source:
+                  content: |-
+                    // This is Camel K Groovy example route
+                    rnd = new Random()
+                    from('timer:groovy?period=1s')
+                        .routeId('groovy')
+                        .setBody()
+                            .constant('Hello Camel K!')
+                        .process {
+                            it.in.headers['RandomValue'] = rnd.nextInt()
+                        }
+                        .to('log:info?showHeaders=true')
+                  name: routes.groovy
+            - apiVersion: camel.apache.org/v1alpha1
+              kind: IntegrationPlatform
+              metadata:
+                name: camel-k
+                labels:
+                  app: "camel-k"
+              spec:
+                build:
+                  camelVersion: "2.23.1"
+                  baseImage: "fabric8/s2i-java:3.0-java8"
+            - apiVersion: camel.apache.org/v1alpha1
+              kind: IntegrationContext
+              metadata:
+                name: knative
+                labels:
+                  app: "camel-k"
+                  camel.apache.org/context.created.by.kind: Operator
+                  camel.apache.org/context.created.by.name: camel-k-operator
+                  camel.apache.org/context.type: platform
+              spec:
+                dependencies:
+                  - runtime:jvm
+                  - runtime:yaml
+                  - camel:core
+                  - camel-k:knative
       spec:
         displayName: Camel-K Operator
         description: |-
@@ -287,14 +336,13 @@ data:
           - name: integrationplatforms.camel.apache.org
             version: v1alpha1
             kind: IntegrationPlatform
-            displayName: Integration Platform CRD
-            description: Integration Platform CRD for Camel-K
+            displayName: Integration Platforms CRD
+            description: Integration Platforms CRD for Camel-K
           - name: integrationcontexts.camel.apache.org
             version: v1alpha1
-            kind: IntegrationContext
+            kind: IntegrationContext     
             displayName: Integration Context CRD
-            description: Integration Context CRD for Camel-K     
-          
+            description: Integration Context CRD for Camel-K
       
   packages: |-
     - packageName: camel-k
