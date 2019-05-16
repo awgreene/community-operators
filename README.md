@@ -4,6 +4,7 @@ This repo is the canonical source for Kubernetes Operators that appear on [Opera
 
 # Know what to contribute
 
+
 To add your operator to any of the above platforms, you will need to submit a PR with your Operator packaged for use with [Operator Lifecycle Manager](https://github.com/operator-framework/operator-lifecycle-manager/). This package contains all of the Custom Resource Definitions (CRDs), access control rules and references to the container image needed to install and securely run your Operator, plus other info like a description of its features and supported Kubernetes versions. [Follow this guide to create an OLM-compatible CSV for your operator](https://github.com/operator-framework/operator-lifecycle-manager/blob/master/Documentation/design/building-your-csv.md), CRDs, and the package.yaml file for your operator.
 
 An Operator's CSV must contain the annotations mentioned [here][required-fields] for it to be displayed properly within the various platforms.
