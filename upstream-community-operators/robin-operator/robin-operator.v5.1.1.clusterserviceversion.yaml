@@ -13,7 +13,7 @@ metadata:
          Robin Storage operator enables advanced data management capabilities to Kubernetes apps like snapshot,clone,rollback,backup,restore,import,etc.
       support: https://robin.io/support/
       alm-examples: >-
-          [{ "apiVersion": "robin.io/v1alpha1", "kind": "RobinCluster", "metadata": { "name": "robin", "namespace": "placeholder" }, "spec": { "host_type": "physical", "image_robin": "robinsys/robin-storage:5.1.1", "k8s_provider": "openshift", "source": "operatorhub", "image_provisioner": "robinsys/csi-provisioner:v1.0.0_robin"} } ]
+          [{ "apiVersion": "robin.io/v1alpha1", "kind": "RobinCluster", "metadata": { "name": "robin", "namespace": "placeholder" }, "spec": { "host_type": "physical", "image_robin": "robinsys/robin-storage:5.1.1", "k8s_provider": "openshift", "source": "operatorhub", "image_provisioner": "robinsys/csi-provisioner"} } ]
 spec:
   displayName: Robin Storage
   keywords: 
@@ -34,8 +34,8 @@ spec:
   links:
   - name: Robin
     url: 'https://robin.io'
-  - name: User Guide
-    url: 'https://s3-us-west-2.amazonaws.com/robinio-docs/5.1.1/index.html'
+  - name: Installation Guide
+    url: 'https://s3-us-west-2.amazonaws.com/robinio-docs/5.1.1/install.html#installation-via-yaml'
   installModes:
   - type: OwnNamespace
     supported: true
@@ -229,7 +229,7 @@ spec:
         path: image_robin
         x-descriptors:
         - "urn:alm:descriptor:com.tectonic.ui:label"
-      - description: Robin Storage Provisioner Image (Use robinsys/csi-provisioner with tag v1.0.0_robin for k8s version >= 1.13, v0.4.1_robin for k8s version v1.11-12)
+      - description: CSI Provisioner Image (Use robinsys/csi-provisioner, tag is optional, if specified should be based on the k8s version. k8s version < 1.13 use v0.4.1_robin. k8s version >= 1.13 use v1.0.0_robin)
         displayName: Provisioner Image
         path: image_provisioner
         x-descriptors:
@@ -296,24 +296,21 @@ spec:
   - email: support@robin.io
     name: Robin
   description: |-
-    Robin Storage operator makes it very easy for users to snapshot, clone, rollback,
-    backup, restore and import of helm charts on OpenShift.
+    ROBIN Storage is an application-aware container storage that offers advanced data management capabilities and runs natively on any Kubernetes distribution including OpenShift, GKE, PKS, EKS, and AKS. ROBIN Storage delivers bare-metal performance and enables you to Protect (via Snapshots, Backups), Secure (via encryption), Collaborate (via Clones and git like push/pull workflows), and make Portable (via Cloud-sync) any Stateful application that is deployed using Helm Charts or Operators.
+
+    The ROBIN Storage Operator provides virtualized storage backed by the pool to all cluster members in a global namespace. ROBIN Storage is available FREE for up to 30 days, with no restrictions on nodes or storage capacity. For more information visit [get.robin.io](https://get.robin.io)
     ### Supported Features
      
-    * **Snapshot**
-    * **Clone**
-    * **Rollback**
-    * **Backup**
-    * **Restore**
-    * **Import**
+    * **Enterprise-class data services** - such as inline compression, thin provisioning and data-at-rest/at-motion encryption
+    * **Day 2 management capabilities** - such as point-in-time snapshots, backup & recovery, app cloning, & multi-cloud migration
+    * **Data protection** - Replicate ROBIN volumes synchronously up to 3 copies
+    * **Quality of service** - Set maximum IO bandwidth for each volume to address the “noisy neighbors” problem
+    * **Rapid volume failover** - Re-attach ROBIN volumes immediately when a pod is rescheduled to another node, irrespective of where the data is located within the cluster
+    * **Works with any infrastructure** - on-premises, VM, bare metal or cloud
+    * **Scale on demand** - Scale up or scale out storage based on application requirements
 
 
+    ### About Robin.io
+    ROBIN brings advanced storage and data management that extends the Agility, Efficiency and Portability of Kubernetes to All Stateful Applications, even complex Big Data, Databases, AI/ML and Custom Apps, on Any Infrastructure, On-Premise, Hybrid Cloud or Multi-Cloud
 
-    ### About Robin Storage
-    ROBIN Storage is a purpose-built container-native application-aware storage solution that brings advanced data management capabilities to Kubernetes-native frameworks including Helm and Operators. Provides enterprise-class data services such as inline compression, thin provisioning and data-at-rest/at-motion encryption.
-
-    ROBIN storage brings capabilities such as point-in-time snapshots, backup & recovery, app cloning, QoS guarantee, & multi-cloud migration for stateful apps on Kubernetes for entire stateful application-stacks (not just on storage volumes).
-
-    ROBIN storage supports rapid failover of pods to meet enhanced application SLAs. Enables OpenShift installations to run enterprise grade and mission-critical stateful applications
-
-    Customers are currently running Stateful workloads such as Cloudera, Hortonworks, Spark, Mongo, Cassandra, Kafka, Postgres, MySQL, Elastic, ELK, Splunk, Oracle, Oracle RAC, SAP HANA, etc. on Kubernetes using ROBIN Storage.
+    Enterprise customers are realizing unparalleled agility and cost benefits by running Stateful workloads such as Cloudera, Hortonworks, Spark, Mongo, Cassandra, Kafka, Postgres, MySQL, Elastic, ELK, Splunk, Oracle, Oracle RAC, SAP HANA, etc. on Kubernetes using ROBIN.
